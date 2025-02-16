@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
   }, [location]);
   return (
     <ThemeProvider>
-    <div className="flex flex-col gap-12 pl-6  dark:bg-colorGradient2 ">
+    <div className="flex flex-col gap-12 pl-6  dark:bg-colorGradient2 justify-center items-center  ">
   <div className="py-2 mt-8"> 
   <UserStats/>
   </div>  

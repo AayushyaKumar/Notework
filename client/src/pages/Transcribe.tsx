@@ -67,7 +67,7 @@ export default function Transcribe() {
 
   return (
     <AuthProvider>
-      <div className={`flex flex-col gap-4 dark:bg-colorGradient2  h-full`}>
+      <div className={`flex flex-col gap-4 dark:bg-colorGradient2  min-h-full justify-center items-center `}>
         <div className="flex flex-col items-center gap-2 mt-4 p-6 ">
           <h1 className="text-3xl font-bold dark:text-white ">
             Youtube Videos Summarizer{" "}
