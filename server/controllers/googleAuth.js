@@ -5,6 +5,7 @@ const noteUser = require("../models/userModel");
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 const jwt = require('jsonwebtoken')
 //  const {cacheUserProfileImage} = require('../utils/imageURL')
 const {joinedDate}= require('../utils/joinDate')
@@ -53,7 +54,7 @@ exports.authGoogle=async(req, res) => {
       );
   
       const accessToken = tokenResponse.data.access_token;
-      console.log(accessToken)
+      
       const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
       //  method:'GET',
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -74,16 +75,16 @@ exports.authGoogle=async(req, res) => {
         // res.cookie('JWT',token,cookie)
         // res.cookie('name',name,cookie)
         res.cookie('JWT',token,cookie)
-        res.redirect('http://localhost:5173')
       }else{
         const token= signToken(isUserExist._id)
         console.log(token)
         res.cookie('JWT',token,cookie)
         // res.cookie('name',name,cookie)
         
-        res.redirect('http://localhost:5173')
        
       }
+      res.redirect(`${FRONTEND_URL}`)
+
 
     } catch ({name,message}) {
       res.status(500).json({

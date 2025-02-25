@@ -13,17 +13,17 @@ function Cards() {
 
   const cards:Cards[]=[
     {  title:"Explore",
-       src:"./../../public/images/explore.jpg"
+       src:"https://res.cloudinary.com/dmuigsle3/image/upload/v1740502197/yepbwnnxtkwzgqazodbw.jpg"
     // button:"Get Started"
     },
     {
       title:"Transcribe",
-      src:"./../../public/images/transcribe.jpg",
+      src:"https://res.cloudinary.com/dmuigsle3/image/upload/v1740502290/k3pswtdnfukd764vrhjv.jpg",
       // button:"Transcribe"
     },
     {
       title:"Dashboard",
-      src:"./../../public/images/dashboard3.jpg",
+      src:"https://res.cloudinary.com/dmuigsle3/image/upload/v1740502052/dk2qho29gxgtwvagta5t.jpg",
       // button:"Personalized Reports"
     }
     

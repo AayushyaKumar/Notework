@@ -109,7 +109,7 @@ exports.auth= async(req,res,next)=>{
     return res.status(401).json({ message: 'No jwt provided' });
   }
   const decoded =await  jwt.verify(JWT, process.env.JWT_SECRET);
-    console.log('Decoded: ',decoded.id)
+    
     const user = await noteUser.findById(decoded.id)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -159,7 +159,7 @@ exports.deleteAcc = async(req,res)=>{
   }
   const decoded = await  jwt.verify(JWT, process.env.JWT_SECRET);
   const delAcc = await noteUser.findByIdAndDelete(decoded.id)
-  console.log(delAcc)
+ 
   if(!delAcc)return new Error(`Error while deleting account ${res.status}`) 
  res.clearCookie('JWT')
   res.status(204).json({message:"Account deleted successfully"})
