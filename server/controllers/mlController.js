@@ -1,5 +1,4 @@
 const FPDF = require('node-fpdf')
-const fs = require("fs")
 const path = require("path")
 const notePrompt = require('./../models/promptModel')
 const {createUrl} = require("../utils/createURL")
@@ -7,10 +6,7 @@ require("dotenv").config
 const prompt="You are Youtube video summarizer. You will take transcribed text and summarize entire video by writing important summary stictly in following way: 1. a suitable title for summary. 2 Small introductory paragraph then description in points. 3. Give the summary only in english language. So, Please provide the summary of the text given here:  "
 const {geminiflash} = require("../utils/geminiFlash")
 const {extract_transcript} = require("../utils/extractTranscript")
-const { url } = require('inspector')
-const { response } = require('express')
 const { error } = require('console')
-const { gemini } = require('../utils/geminiAn')
 const {getVideoDetails}=require('../utils/getVideoDetails')
 
 const filePath = path.join(__dirname, './../disk/A.pdf'); 
@@ -34,7 +30,7 @@ exports.Summary= async(req,res,next)=>{
                 const img = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
         const transcript = await  extract_transcript(id)
         const response= await  geminiflash(transcript,prompt)
-        const {genre,title}= await getVideoDetails(input)
+        const data = await getVideoDetails(input)
                 const pdf = new FPDF('P','mm','A4');
                 pdf.AddPage();
                 pdf.SetFont('Arial','B',12);
@@ -45,8 +41,8 @@ exports.Summary= async(req,res,next)=>{
                   heading:response.heading,
                   prompt:input,
                   summary : response.text,
-                   genre,
-                   title,
+                   genre:data.category,
+                   title:data.title,
                    thumbnail:img
                 })
             
@@ -149,40 +145,38 @@ exports.Pdf= async(req,res,next)=>{
   const {heading}= req.body
   console.log(heading)
   try{
-  const notePdf= await notePrompt.findOne({heading})
-console.log(notePdf)
-  if(!notePdf) return new Error("An error occured while deleting",error)
+  const notePdf= await notePrompt.find({heading,summaryUrl:null})
+  console.log(notePdf)
+  if(!notePdf || notePdf.length === 0) throw new Error("Something went wrong",error)
   
-  if(!notePdf.summaryUrl){
-    const pdf = new FPDF('P','mm','A4');
-                pdf.AddPage();
-                pdf.SetFont('Arial','B',12);
-                pdf.MultiCell(0,10,notePdf.summary);
-                pdf.Output('F',filePath);
-    const link = await createUrl()
-    notePdf.summaryUrl = link.url
 
-  } 
-       await notePdf.save()
-
-  res.status(200).json({
-    status:"Success",
-    data:{
-      url:notePdf.summaryUrl
+  const pdf = new FPDF('P','mm','A4');
+  pdf.AddPage();
+  pdf.SetFont('Arial','B',12);
+  pdf.MultiCell(0,10,notePdf[0].summary);
+  pdf.Output('F',filePath);
+  let link = ''
+    for (const value of notePdf){
+    
+       link = await createUrl()
+      value.summaryUrl = link.url 
+      await value.save()
     }
-   }) 
+   res.status(200).json({
+    status:"success",
+    url:link.url
+   })
+
   }catch({name,message}){
     res.status(404).json({
       status:name,
       message:message
     })
+    console.log(message)
    }
 }
 
 
-exports.Genre= async(req,res,next)=>{
-
-}
 
 
 

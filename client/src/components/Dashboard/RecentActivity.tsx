@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
 import { FileText, Star, Pen } from "lucide-react"
+import { useAuthContext } from "../../hooks/useAuth";
 
-interface activity {
+interface useractivity {
   url:string[],
   genre:string[],
   heading:string[]
 }
 export function UserStats() {
     const [mostFrequent, setMostFrequent] = useState<{ element: string; count: number } | null>(null);
+    const {activity}=useAuthContext()
     const [pdfs,setPdfs]=useState(0)
     const [summary,setSummary] = useState(0)
     useEffect(() => {
 
 
-        const stringsArray:activity = JSON.parse(sessionStorage.getItem("activity") || "[]");
-
-        const  Url = stringsArray.url.length
-        
-        if(Url)  {     
-            setPdfs(Url)
+        // const storedArray = sessionStorage.getItem("activity")
+        const stringsArray:useractivity= activity?activity: {url:[],genre:[],heading:[]}
+     
+        if (!stringsArray.url) stringsArray.url = [];
+        if (!stringsArray.heading) stringsArray.heading = [];
+        if (!stringsArray.genre) stringsArray.genre = [];        
+        if(stringsArray.url.length)  {     
+            setPdfs(stringsArray.url.length)
 
         }
         if(stringsArray.heading.length){
@@ -47,10 +51,10 @@ export function UserStats() {
     
           return { element: maxElement, count: maxCount };
         };
-    
+    if(stringsArray.genre.length>0){
         const result = findMostFrequentElement(stringsArray.genre);
         setMostFrequent(result);
-
+    }
     }, []);
 
   return (
@@ -86,7 +90,7 @@ export function UserStats() {
           <Star className="h-4 w-4 text-muted-foreground dark:text-gray-300" />
         </CardHeader>
         <CardContent>
-       <div className="text-2xl font-bold dark:text-white">{ mostFrequent ?mostFrequent.element: "Technology"}</div>
+       <div className="sm:text-2xl text-lg font-bold dark:text-white ">{ mostFrequent ?mostFrequent.element: "Nothing "}</div>
            <p className="text-xs text-muted-foreground dark:text-gray-300">Based on your summaries</p>
         </CardContent>
       </Card>

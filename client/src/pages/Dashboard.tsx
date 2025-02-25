@@ -36,28 +36,9 @@ const Dashboard: React.FC = () => {
   </div>  
       <div ref={analysisRef} id="analysis">
 <Resources /></div>
-{/* <div  className="flex flex-row gap-28" > */}
-{/* <Card className="w-11/12 ml-4 py-4 mt-">
-          <CardHeader>
-            <CardTitle className=" dark:text-white  text-2xl">Analytics Overview</CardTitle>
-            <CardDescription className="dark:text-gray-400 text-xl">Summary of your usage and performance</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Suspense fallback={<div>Loading analytics...</div>}>
-              <Analytics />
-            </Suspense>
-          </CardContent>
-        </Card> */}
- {/* <Analytics/> */}
-
-        <div ref={chartsRef} id="charts">
-          
-        {/* </div> */}
+<div ref={chartsRef} id="charts" className="w-full">
         <BarChartComponent />
-        </div>
-        {/* <div className="dark:bg-colorGradient2 ">
-        <Recommendations />
-        </div>  */}
+    </div>  
       </div>
     </ThemeProvider>
  

@@ -76,8 +76,8 @@ export default function Login() {
           <h1>Welcome Back 👋 {message} !!</h1>
         </div>
       ) : (
-        <div className=" min-h-screen flex  justify-center items-center py-8">
-          <div className=" flex items-center justify-center p-11 flex-col border-2 border-gray-400 w-full max-w-md   rounded-lg ">
+        <div className=" min-h-screen flex  justify-center items-center py-8 ">
+          <div className=" flex items-center justify-center p-11 flex-col border-2 border-gray-400 max-sm:border-none w-full max-w-md   rounded-lg ">
             <h1 className="text-2xl mb-3 dark:text-gray-300">
           
               Hello <b className="dark:text-white">Notework User </b>

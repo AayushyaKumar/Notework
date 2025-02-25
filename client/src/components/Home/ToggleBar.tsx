@@ -1,6 +1,7 @@
 import { X } from "lucide-react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { useAuthContext } from "../../hooks/useAuth";
+import { useRef } from "react";
 
 interface Open{
     isOpen:boolean
@@ -8,9 +9,19 @@ interface Open{
 }
 
 
+
 export function ToggleBar({isOpen,isClose}: Open ){
   const { isAuthenticated, user } = useAuthContext();
+  const navigate = useNavigate();
 
+  const location = useLocation()
+  const chartRef = useRef<HTMLDivElement>(null);
+
+
+  const handleNavigateToCharts = () => {
+    navigate("/dash#charts");
+    chartRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
     return(
 <div
@@ -22,7 +33,7 @@ export function ToggleBar({isOpen,isClose}: Open ){
             <X className="dark:text-white text-black  mt-2 h-6 w-8"/>
    
             </button>
-            <ul className=" flex flex-col items-center gap-4">
+            <ul className=" flex flex-col items-center gap-8">
 
             {(isOpen && isAuthenticated)? (
               <>
@@ -38,7 +49,7 @@ export function ToggleBar({isOpen,isClose}: Open ){
           </NavLink>
  <li className=" font-bold dark:text-white text-xl">
 
- <NavLink to="pdf">
+ <NavLink to="pdf#prompt" className={({isActive})=>` ${(isActive && (location.hash==='#prompt'))? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor': 'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
                    {" "}
                      Transcribe
                   
@@ -47,16 +58,18 @@ export function ToggleBar({isOpen,isClose}: Open ){
                 </li>
                
                  <li className=" font-bold dark:text-white text-xl">
-                   {" "}<NavLink to="dash">
+                   {" "}<NavLink to="dash#resources" className={({isActive})=>` ${(isActive && (location.hash==='#resources'))? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor':  'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
                      Dashboard
                    </NavLink>
                  </li>
                
                
-                 <li className="font-bold dark:text-white text-xl ">
-                   {" "}<NavLink to="dash">
-                     Reports
+                 <li className="font-bold dark:text-white text-xl  ">
+                  <button onClick={handleNavigateToCharts}>
+                  <NavLink to="dash#charts" className={({isActive})=>`${(isActive && location.hash==='#charts')? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor ': 'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
+                  Reports
                    </NavLink>
+                   </button>
                  </li>
                  </>
 
@@ -64,10 +77,10 @@ export function ToggleBar({isOpen,isClose}: Open ){
           <>
           <li className="font-bold text-xl">
                   {" "}
-                  <NavLink to="/login">Login</NavLink>
+                  <NavLink to="/login" >Login</NavLink>
                 </li>
                 <li className="bg-colorGradient2 p-1.5 rounded-lg font-bold text-white text-xl">
-                  <NavLink to="/signup">Sign Up</NavLink>
+                  <NavLink to="/signup" >Sign Up</NavLink>
                 </li></> 
                 }
 

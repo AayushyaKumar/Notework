@@ -14,20 +14,24 @@ const createUrl= async()=>{
      const uploadResult = await v2.uploader
        .upload(
            pdfPath, {
-               resource_type:"raw",
-           }
+               resource_type:"image",
+               timeout:1200000
+           },
+        
        )
        .catch((error) => {
-           console.log(error);
+           console.log(error,".catch error");
        });
     
     console.log(uploadResult);
     
     // Optimize delivery by resizing and applying auto-format and auto-quality
   
-  
-    return uploadResult
-      }catch(err){
+    return new Promise((resolve) => {
+        resolve(uploadResult)
+      });  
+
+}catch(err){
         res.send(err)
       }  // Transform the image: auto-crop to square aspect_ratio
    

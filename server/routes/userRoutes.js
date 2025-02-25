@@ -11,9 +11,7 @@ authrouter.get('/google', googleAuth.authGoogle);
 authrouter.get('/google/oauth2callback',googleAuth.authorize);
 authrouter.post('/logout',authController.logout)
 authrouter.delete('/delete',authController.deleteAcc)
-
-// resetPassword route
-
-authrouter.post('/resetPassword', authenticate.resetPassword1)
-authrouter.post('/resetPassword/:token', authenticate.resetPassword2)
+authrouter.post('/resetPassword', authenticate.forgotPassword)
+authrouter.get('/resetPassword/:token', authenticate.verifyToken)
+authrouter.post('/resetPassword/:token', authenticate.resetPassword)
 module.exports = authrouter

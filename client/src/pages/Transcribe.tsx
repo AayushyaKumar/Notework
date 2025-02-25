@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Createpdf from "../components/Transcribe/Createpdf";
 import Previous from "../components/Transcribe/Previous";
 import { useAuthContext } from "../hooks/useAuth";
@@ -6,14 +6,27 @@ import { AuthProvider } from "../context/auth";
 import { TextGenerateEffect } from "../components/Transcribe/text-generate-effect"; 
 import { SkeletonWave, TypingAnimation,LoadingSkeleton} from "../components/Transcribe/SkeletonEffect";
 import { ArrowRight } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 export default function Transcribe() {
-  const { activity,logout,setIsNew } = useAuthContext();
+  const { logout,setIsNew } = useAuthContext();
   const [id, setId] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<string>('');
   const [isDisable, setIsDisable] = useState(false);
-  // const navigate=useNavigate()
+   const promptRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
+    useEffect(() => {
+      const scrollToSection = () => {
+        const hash = location.hash;
+      if (hash === "#prompt" && promptRef.current) {
+          promptRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+  
+      scrollToSection();
+    }, [location]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
@@ -40,7 +53,7 @@ export default function Transcribe() {
         body: JSON.stringify({ input }),
       });
       const data = await response.json();
-      console.log(data);
+      
       if(response.status===401){
 
   logout()
@@ -61,12 +74,9 @@ export default function Transcribe() {
       setOutput("Oops, Something went wrong, try with another video")
     }
   };
-
-
-  
-
   return (
     <AuthProvider>
+      <div id="prompt" ref={promptRef}>
       <div className={`flex flex-col gap-4 dark:bg-colorGradient2  min-h-full justify-center items-center `}>
         <div className="flex flex-col items-center gap-2 mt-4 p-6 ">
           <h1 className="text-3xl font-bold dark:text-white ">
@@ -110,7 +120,8 @@ disabled={isDisable}
           </form>
           
         </div>
-     <div className="flex flex-col justify-center gap-8 md:gap-16">
+        </div>
+     <div className="flex flex-col justify-center gap-8 mt-4 md:gap-16">
   {(isDisable) ?
   <>
     
@@ -125,7 +136,7 @@ disabled={isDisable}
   output &&
   <img
                   src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
-                  alt="hi"
+                  alt="thumbnail image"
                   className="rounded-lg  w-4/6 h-92 mx-auto "
                 /> 
               }

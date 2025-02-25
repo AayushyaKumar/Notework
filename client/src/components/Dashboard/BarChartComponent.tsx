@@ -10,9 +10,6 @@ import { useEffect, useState } from "react"
 import React from "react"
 import { useAuthContext } from "../../hooks/useAuth";
 
-interface Activity {
-  genre: string[]
-}
 
 interface ChartDataItem {
   topic: string
@@ -32,12 +29,13 @@ const colorPalette = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--c
 export default function BarChartComponent() {
   const [chartData, setChartData] = useState<ChartDataItem[]>([])
   const [chartConfig, setChartConfig] = useState<ChartConfig>({})
+  
   const {activity}=useAuthContext()
   useEffect(() => {
     const fetchActivityData = () => {
-      const activityData = sessionStorage.getItem("activity")
-      if (activityData) {
-        const activity: Activity = JSON.parse(activityData)
+      // activity
+      if (activity) {
+        // const useractivity: Activity = activity
 
         const topicCounts: { [key: string]: number } = {}
         activity.genre.forEach((topic) => {
@@ -46,10 +44,7 @@ export default function BarChartComponent() {
 
         const sortedTopics = Object.entries(topicCounts).sort((a, b) => b[1] - a[1])
 
-        // Take top 3 topics
         const top3Topics = sortedTopics.slice(0, 4)
-
-        // Calculate the sum of other topics
         const otherCount = sortedTopics.slice(4).reduce((sum, [, count]) => sum + count, 0)
 
         const newChartData: ChartDataItem[] = [
@@ -98,17 +93,17 @@ export default function BarChartComponent() {
   }
 
   return (
-    <Card className=" w-full flex-col border-none justify-center items-center mb-24 py-6 ">
+    <Card className=" w-full max-sm:w-3/2     mx-auto  flex-col border-none justify-center items-center mb-24 py-6 ">
       <CardHeader className="items-center pb-0 ">
-        <CardTitle className="dark:text-white text-3xl ">Your Interests & Asked Topics</CardTitle>
+        <CardTitle className="dark:text-white md:text-3xl text-xl"> Asked Topics</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0 lg:mt-20 md:mt-15 mt-12">
-     { !activity?.heading[0] ? <div className="flex flex-row justify-center items-center gap-8"><ChartPie className="h-28 w-32 dark:text-white"/>
+     { !activity?.genre[0] ? <div className="flex flex-row justify-center items-center gap-8"><ChartPie className="h-28 w-32 dark:text-white"/>
      <div className="flex flex-col">
      <p className="dark:text-white lg:text-xl md:text-lg ">Analysis of your interested topics will show up here as soon as </p>
      <p className="dark:text-white lg:text-xl md:text-lg "> you create some summaries on <b className="font-bold">Notework</b>.</p>
      </div>
-     </div>  : <ChartContainer config={chartConfig} className="w-full mx-auto aspect-square sm:h-[600px] h-[700px] ">
+     </div>  : <ChartContainer config={chartConfig} className="w-full max-sm:overflow-scroll aspect-square sm:h-[600px] h-[500px] ">
         <PieChart>
             <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
             <Pie data={chartData} dataKey="visitors" nameKey="topic"  innerRadius={90} 
@@ -147,7 +142,7 @@ export default function BarChartComponent() {
             </Pie>
             <ChartLegend
               content={<ChartLegendContent nameKey="topic" />}
-              className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center dark:text-white text-lg"
+              className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 dark:text-white max-md:text-base md:text-lg 2xl:text-3xl"
             />
           </PieChart>
         </ChartContainer>}

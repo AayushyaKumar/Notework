@@ -17,7 +17,8 @@ import { ThemeProvider } from './context/Theme';
 import ProfilePage from './components/ProfilePage';
 import Cards from './components/Home/Cards';
 import { ForgotPasswordForm } from './components/Auth/ForgotPassword';
-import ResetPass from './components/Auth/ResetPass';
+import {ProtectedResetRoute} from './components/Auth/ProtectedResetRoute';
+import InvalidTokenPage from './components/Auth/InvalidTokenPage';
 // import Section from './components/Sections';
 
 export default function App(){
@@ -32,7 +33,9 @@ return(
  {/* <Route path="/" element={<Section/>}/> */} 
    <Route path="/login" element={<Login/>} />
    <Route path="/signup"element={<Signup/>}/>
-   <Route path="/resetPassword/:token" element={<ResetPass/>}/>
+   <Route path="/resetPassword/:token" element={<ProtectedResetRoute/>}/>
+   <Route path="/invalid-reset-link" element={<InvalidTokenPage />} />
+
    <Route path="/forgotPassword" element={<ForgotPasswordForm/>}></Route>
    <Route element={<ProtectedRoute/>}>
    <Route path="/dash" element={ <Dashboard/>}  />
