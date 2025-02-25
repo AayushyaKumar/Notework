@@ -1,7 +1,7 @@
 // src/components/Profile.tsx
 import React, { useState } from 'react';                              
 import { motion } from 'framer-motion';
-import {  CalendarIcon,  TrashIcon } from '@heroicons/react/24/outline';
+import {  CalendarIcon } from '@heroicons/react/24/outline';
 // import { UploadIcon } from 'lucide-react';
 //  import { AuthProvider } from "../context/auth";
 import { useAuthContext } from '../hooks/useAuth';
@@ -14,9 +14,7 @@ const ProfilePage: React.FC = () => {
 const [disable,setDisable] = useState(true)
 const[email,setEmail]=useState(user?.email)
 const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 const [username,setUserName]=useState(user?.name)
-const [delaccount,setDelAccount] = useState('')
 
 const handleEdit=()=>{
 if(disable){
@@ -33,7 +31,7 @@ if(disable){
 
 const handleLogout = async () => {
   try {
-    const response = await fetch('http://localhost:4000/auth/logout', {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}auth/logout`, {
       method: 'POST',
       credentials: 'include', 
     });
@@ -49,27 +47,7 @@ const handleLogout = async () => {
   }
 };
 
-const handleDeleteAccount = async()=>{
-  try{
-  let response = await fetch('http://localhost:4000/auth/delete',{
-    method:'DELETE',
-    credentials: 'include'
-   })
-   response = await response.json()
-   if(response.status ){
-      setDelAccount("Your Account deleted successfully")
-      sessionStorage.clear()
-      localStorage.clear()
-   }else{
-    setDelAccount('Oops, something went very wrong')
-   }
 
-  }catch(error){
-    console.log(error)
-    setDelAccount('Oops, something went very wrong')
-  }
-   
-}
   return (
     <div className="dark:bg-colorGradient2 p-12 md:py-14 2xl:h-screen 2xl:flex 2xl:items-center ">
       
@@ -83,7 +61,7 @@ const handleDeleteAccount = async()=>{
     <div className="flex flex-col items-center text-2xl font-bold text-gray-800 dark:text-white " >{localStorage.getItem('disable')==='false'? <>Edit your Profile</> :<>Profile Page</> }</div>
             <div className='flex justify-end'> <button onClick={handleEdit}><svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill={"gray"} d="m14.06 9.02l.92.92L5.92 19H5v-.92zM17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83a.996.996 0 0 0 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94z"/></svg> </button></div>
 <div className="flex flex-col items-center">
-      {/* Profile Picture */}
+    
       <div className="relative ">
 
         {user?<img src={`${user?.profile}`} className="w-24 h-24 md:w-32 md:h-32 rounded-full "/>:<div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center md:w-32 md:h-32">
@@ -126,14 +104,11 @@ const handleDeleteAccount = async()=>{
       {/* Action Buttons */}
     { localStorage.getItem('disable')==='false'?   <button className="flex items-center px-4 py-2 text-white bg-blue-500 font-bold rounded hover:bg-blu7-600" onClick={handleEdit}>
         Save Changes
-        </button> : <div className="flex justify-between w-full mt-6 space-x-4 py-6">
-        <button className="flex items-center sm:px-4 sm:py-2 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"  onClick={() => setShowLogoutConfirm(true)} >
+        </button> : <div className="flex flex-col justify-between  w-1/2 mt-6 space-x-4 py-6">
+        <button className="flex items-center justify-center sm:px-4 sm:py-2 px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"  onClick={() => setShowLogoutConfirm(true)} >
          Logout
         </button>
-        <button className="flex items-center sm:px-4 sm:py-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 mr-12"  onClick={() => setShowDeleteConfirm(true)} >
-          <TrashIcon className="h-5 w-5 mr-1 " /> Delete Account
-        </button>
-       { delaccount}
+      
       </div>}
       </div>
     </motion.div>
@@ -148,16 +123,7 @@ const handleDeleteAccount = async()=>{
       isDel={false}
       />
 
-<ConfirmationPopup
-        isOpen={showDeleteConfirm}
-        title="Delete Account"
-        message="It's hard to say Good Bye 🥺.
-         Are you sure you want to delete your account? "
-        confirmText="Delete Account"
-        onConfirm={handleDeleteAccount}
-        onCancel={() => setShowDeleteConfirm(false)}
-        isDel={true}
-      />
+
     </div>
   );
 };

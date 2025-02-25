@@ -157,11 +157,12 @@ exports.deleteAcc = async(req,res)=>{
   
     return res.status(401).json({ message: 'No jwt provided' });
   }
-  const decoded =await  jwt.verify(JWT, process.env.JWT_SECRET);
+  const decoded = await  jwt.verify(JWT, process.env.JWT_SECRET);
   const delAcc = await noteUser.findByIdAndDelete(decoded.id)
+  console.log(delAcc)
   if(!delAcc)return new Error(`Error while deleting account ${res.status}`) 
- 
-  res.status(204)
+ res.clearCookie('JWT')
+  res.status(204).json({message:"Account deleted successfully"})
   }catch (err) {
     console.log(err)
       return res.status(401).json({ message: err });

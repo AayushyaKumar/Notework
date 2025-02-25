@@ -11,7 +11,7 @@ export const ProtectedResetRoute = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try{
-        const result = await axios.get(`http://localhost:4000/auth/resetPassword/${token}`);
+        const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/resetPassword/${token}`);
         setIsValid(result.data.valid);
       }catch {
         setIsValid(false);

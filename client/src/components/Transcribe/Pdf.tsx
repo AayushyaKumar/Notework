@@ -15,7 +15,7 @@ function Pdf({heading,index,onPdfGenerated}:Heading) {
 
         setIsDisable(true)
         try{
-        const response= await axios.post('http://localhost:4000/ai/makePdf',
+        const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}ai/makePdf`,
        { heading } ,
        { withCredentials: true,  } )
         //  const activityJSON= sessionStorage.getItem('activity')

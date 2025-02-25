@@ -15,7 +15,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     setError("");
 
     try {
-      const response = await axios.post(`http://localhost:4000/auth/resetPassword/${token}`, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}auth/resetPassword/${token}`, {
         newPassword,
         confirmPassword,
       });

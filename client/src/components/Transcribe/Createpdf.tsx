@@ -6,7 +6,7 @@ function Createpdf() {
   const id = sessionStorage.getItem("id");
   const pdf = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/ai/createPdf/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}ai/createPdf/${id}`, {
         method: "POST",
         credentials: "include",
       });

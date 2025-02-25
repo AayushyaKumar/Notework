@@ -14,6 +14,7 @@ export default function Transcribe() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<string>('');
   const [isDisable, setIsDisable] = useState(false);
+  // const navigate=useNavigate()
    const promptRef = useRef<HTMLDivElement>(null);
     const location = useLocation();
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function Transcribe() {
        }
 
       setId(label);
-      const response = await fetch("http://localhost:4000/ai/summary", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}ai/summary`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export default function Transcribe() {
         body: JSON.stringify({ input }),
       });
       const data = await response.json();
-      
+      console.log(data);
       if(response.status===401){
 
   logout()
@@ -121,7 +122,7 @@ disabled={isDisable}
           
         </div>
         </div>
-     <div className="flex flex-col justify-center gap-8 mt-4 md:gap-16">
+     <div className="flex flex-col justify-center gap-8 md:gap-16">
   {(isDisable) ?
   <>
     

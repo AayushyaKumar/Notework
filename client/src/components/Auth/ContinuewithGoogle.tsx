@@ -2,7 +2,7 @@
 export default function ContinuewithGoogle() {
 
   const googleAuth = async () => {    
-    window.location.replace('http://localhost:4000/auth/google')
+    window.location.replace(`${import.meta.env.VITE_BACKEND_URL}auth/google`)
 
   };
   return (

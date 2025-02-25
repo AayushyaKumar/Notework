@@ -12,7 +12,6 @@ export default function Login() {
     password: "",
   });
   const navigate = useNavigate();
-  // const { user } = useAuthContext();
   const [message, setMessage] = useState("");
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const handleChange = async (e: {
