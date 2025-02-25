@@ -13,17 +13,17 @@ function Cards() {
 
   const cards:Cards[]=[
     {  title:"Explore",
-       src:"./../../images/explore.jpg"
+       src:"./../../public/images/explore.jpg"
     // button:"Get Started"
     },
     {
       title:"Transcribe",
-      src:"./../../images/transcribe.jpg",
+      src:"./../../public/images/transcribe.jpg",
       // button:"Transcribe"
     },
     {
       title:"Dashboard",
-      src:"./../../images/dashboard3.jpg",
+      src:"./../../public/images/dashboard3.jpg",
       // button:"Personalized Reports"
     }
     
