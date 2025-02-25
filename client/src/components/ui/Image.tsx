@@ -1,6 +1,8 @@
 interface CardProps{
     src: string,
-    title:string
+    title?:string
+    alt:string
+    className:string
 }
 
 export default function Image({src,title}:CardProps){

@@ -24,6 +24,11 @@ interface ChartConfig {
   }
 }
 
+interface CustomViewBox {
+  cx: number
+  cy: number
+}
+
 const colorPalette = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))"]
 
 export default function BarChartComponent() {
@@ -82,6 +87,7 @@ export default function BarChartComponent() {
     }
 
     fetchActivityData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const totalVisitors = React.useMemo(() => {
@@ -110,9 +116,9 @@ export default function BarChartComponent() {
                strokeWidth={5}>
                 <Label
                   content={(props: LabelProps) => {
-                    const { viewBox } = props
-                    const centerX = viewBox?.cx ?? 0
-                    const centerY = viewBox?.cy ?? 0
+                    const { viewBox } = props as {viewBox:CustomViewBox}
+                    const centerX = "cx" in viewBox ? viewBox.cx : 0
+                    const centerY = "cy" in viewBox ? viewBox.cy : 0
                     return (
                       <g>
                         <text

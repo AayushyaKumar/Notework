@@ -32,7 +32,7 @@ export const Card = React.memo(
       <Image
         src={card.src}
         alt={card.title}
-        fill
+        
         className="object-cover absolute inset-0"
       />
       <div
