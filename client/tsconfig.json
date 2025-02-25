@@ -5,6 +5,10 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "target": "ES2015",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

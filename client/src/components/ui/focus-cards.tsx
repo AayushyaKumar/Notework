@@ -1,6 +1,6 @@
-"use client";
+
  import Image from "./Image";
-import React, { useState } from "react";
+import  { useState,memo } from "react";
 import { cn } from "../../lib/utils";
 
 interface Cards{
@@ -9,7 +9,7 @@ interface Cards{
     // button:string
   }
 
-export const Card = React.memo(
+export const Card = memo(
   ({
     card,
     index,

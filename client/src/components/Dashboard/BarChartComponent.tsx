@@ -6,8 +6,8 @@ import { ChartPie } from 'lucide-react';
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from "../ui/chart"
-import { useEffect, useState } from "react"
-import React from "react"
+import { useEffect, useState,useMemo } from "react"
+
 import { useAuthContext } from "../../hooks/useAuth";
 
 
@@ -90,7 +90,7 @@ export default function BarChartComponent() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const totalVisitors = React.useMemo(() => {
+  const totalVisitors = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [chartData])
 

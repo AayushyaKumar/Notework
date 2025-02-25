@@ -1,10 +1,10 @@
-"use client";
+
 import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "../ui/hero-highlight";
 
 export default function Centre() {
   return (
-    (<HeroHighlight>
+    <HeroHighlight>
       <motion.h1
         initial={{
           opacity: 0,
@@ -24,6 +24,6 @@ No More Wading Through Walls of Text – Experience the Power of  {" "}
         Smart Summaries with Notework 
         </Highlight>
       </motion.h1>
-    </HeroHighlight>)
+    </HeroHighlight>
   );
 }
