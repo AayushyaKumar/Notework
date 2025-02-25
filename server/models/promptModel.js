@@ -25,7 +25,7 @@ const promptSchema = new Schema({
     },
 
     title:{
-        type:String,required:true
+        type:String
     },
 
     createdAt: { type: Date, default: Date.now },

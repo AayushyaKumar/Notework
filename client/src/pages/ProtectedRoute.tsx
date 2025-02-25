@@ -13,10 +13,6 @@ export const ProtectedRoute: React.FC = () => {
         }
       }, [isAuthenticated, location, navigate]);
     
-  
-    // if (auth) {
-    //     return <Outlet />;
-    // }
-  
+
     return isAuthenticated?<Outlet/>:null
   };

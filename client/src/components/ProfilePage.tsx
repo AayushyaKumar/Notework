@@ -17,11 +17,11 @@ const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 const [username,setUserName]=useState(user?.name)
 const [delaccount,setDelAccount] = useState('')
+
 const handleEdit=()=>{
 if(disable){
   setDisable(false)
   localStorage.setItem('disable','false')
-
 }else{
   setDisable(true)
   localStorage.setItem('disable','true')
@@ -30,16 +30,6 @@ if(disable){
  
  
 }
-
-// const handleLogout = async () => {
-//   try {
-//     Cookies.remove()
-//     sessionStorage.clear()
-//     navigate('/login');
-//   } catch (err) {
-//     setError('Failed to logout. Please try again.');
-//   }
-// };
 
 const handleLogout = async () => {
   try {
@@ -103,13 +93,12 @@ const handleDeleteAccount = async()=>{
       </div>
             <div className="flex flex-col items-center justify-center gap-8 ">
         <h2 className="text-2xl font-bold mt-6 ">{" " }</h2>
-        <input className={`flex items-center justify-center  sm:w-full w-11/12 border  dark:bg-white border-gray-400 p-2 rounded-lg  ${localStorage.getItem('disable')==='false'? 'placeholder-gray-800 font-bold': 'placeholder-gray-400 '}`} placeholder={username} value={username} onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setUserName(e.target.value)}}  disabled={disable}/>
+        <input className={`flex items-center justify-center  sm:w-full w-11/12 border  dark:bg-colorGradient2  dark:text-white border-gray-400 p-2 rounded-lg  ${localStorage.getItem('disable')==='false'? 'placeholder-black  dark:placeholder-gray-300 font-bold': 'placeholder-gray-700  dark:placeholder-gray-400 '}`} placeholder={user?.name} value={username} onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setUserName(e.target.value)}}  disabled={disable}/>
         <div className="flex flex-col items-center justify-center   gap-8">
-        <input className={`flex items-center justify-center sm:w-full w-11/12 border  dark:bg-white border-gray-400 p-2 rounded-lg ${localStorage.getItem('disable')==='false'? 'placeholder-gray-800 font-bold': 'placeholder-gray-600 '}`} placeholder={email} value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setEmail(e.target.value)}}  disabled={disable}/>
+        <input className={`flex items-center justify-center sm:w-full w-11/12 border  dark:bg-colorGradient2 dark:text-white border-gray-400 p-2 rounded-lg ${localStorage.getItem('disable')==='false'? 'placeholder-black  dark:placeholder-gray-300 font-bold': 'placeholder-gray-700  dark:placeholder-gray-400'}`} placeholder={user?.email} value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setEmail(e.target.value)}}  disabled={disable}/>
        </div><div className="flex items-center justify-center"> 
-        <input className={`flex items-center justify-center sm:w-full w-11/12 dark:text-black border  dark:bg-white border-gray-400 p-2 rounded-lg ${localStorage.getItem('disable')==='false'? 'placeholder-gray-800 font-bold': 'placeholder-gray-600'}`} placeholder=' ************' disabled={disable} type="password" />
+        <input className={`flex items-center justify-center sm:w-full w-11/12  border  dark:bg-colorGradient2 dark:text-white border-gray-400 p-2 rounded-lg ${localStorage.getItem('disable')==='false'? 'placeholder-black  dark:placeholder-gray-300 font-bold ': 'placeholder-gray-700  dark:placeholder-gray-400'}`} placeholder='**********' disabled={disable} type="password" />
         </div>  
-        
         <div className="flex items-center text-gray-600 dark:text-white">
           <CalendarIcon className="h-5 w-5 mr-1 " /> { user?.joinedDate && `Joined ${user?.joinedDate}` }
         </div>

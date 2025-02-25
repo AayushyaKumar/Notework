@@ -6,8 +6,7 @@ const cookieParser = require('cookie-parser');
 const { rateLimit } = require('express-rate-limit')
 const authrouter = require("./routes/userRoutes")
 const mlrouter = require("./routes/mlroutes")
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const GoogleAuth = require('./controllers/googleAuthController')
+
 require('dotenv').config()
 app.use(express.json())
 app.use(cookieParser());

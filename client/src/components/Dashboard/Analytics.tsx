@@ -7,7 +7,7 @@ export default  function Analytics() {
 
   return (
     <div className="grid gap-4 md:grid-cols-3 ">
-      <Card>
+      <Card >
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-14">
           <CardTitle className=" dark:text-white text-xl  ">Total Summaries</CardTitle>
           <FileText className="h-6 w-6  text-muted-foreground dark:text-gray-400" />

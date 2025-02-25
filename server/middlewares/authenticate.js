@@ -9,9 +9,7 @@ exports.protectedRoute = async (req, res, next) => {
         return next("You are not logged in! Please log in to get access.", 401);
       }
       
-  
-      // 2) Verification token
-      const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
       
       console.log(decoded)
      userId = decoded.id
@@ -24,6 +22,5 @@ exports.protectedRoute = async (req, res, next) => {
         message,
       });
     }
-    // 1) Getting token and check of it's there
   };
   

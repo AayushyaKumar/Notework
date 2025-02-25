@@ -61,7 +61,9 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
     setUser(null);
     setActivity(null);
     sessionStorage.clear();
+    
     navigate('/login');
+    window.location.reload()
   }, [navigate]);
   const checkAuth = useCallback(async () => {
     
@@ -74,7 +76,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
       }
         setIsAuthenticated(true);
         setUser(response.data);
-        console.log(response)
+      
         sessionStorage.setItem('user', JSON.stringify(response.data.data));
          
        } catch (error) {
@@ -87,7 +89,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
 
   const fetchActivity = useCallback( async()=>{
     if (!user?.id) {
-      console.warn('No user ID found, skipping fetchActivity');
+      // console.warn('No user ID found, skipping fetchActivity');
       return;
     }
   
@@ -122,6 +124,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
         setActivity(JSON.parse(cachedActivity));
     } else {
         fetchActivity(); 
+        
     }
     if(isNew) {
       fetchActivity()

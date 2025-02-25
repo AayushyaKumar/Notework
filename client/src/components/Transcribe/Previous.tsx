@@ -17,9 +17,7 @@ function Previous() {
     <AuthProvider>
     <div className="flex flex-col justify-center gap-10 py-12">
       <h1 className=" flex justify-center text-2xl font-bold dark:text-white">Previous Visited</h1>
-      <div className="md:flex md:flex-row md:justify-center md:items-center md:gap-8 md:ml-10 md:mr-10 flex flex-col items-center md:w-11/12 w-4/5 mx-auto gap-20">  
- 
- 
+ <div className="xl:flex xl:flex-row xl:justify-center xl:items-center xl:gap-8 xl:ml-10 xl:mr-10 flex flex-col items-center xl:w-11/12 w-4/5 mx-auto gap-20">  
    {!activity?.thumbnail[0]?
    <div className="flex flex-row items-center justify-center gap-8 dark:text-white lg:text-2xl md:text-xl text-lg p-4 mb-4 mt-4">
 <Video className="h-20 w-20"/>
@@ -28,10 +26,9 @@ Your previous videos and their title would appear here
     </p>
    </div>
   : activity?.thumbnail.slice(startIndex, startIndex + itemsPerPage).map((value,key)=>(
-    <div className="border-2 border-gray-300 rounded  h-[300px] w-[250px] flex flex-col" key={ startIndex+ key}>
+    <div className="border-2 border-gray-300 rounded  h-[300px] w-[250px] flex flex-col " key={ startIndex+ key}>
     <img src={value} className="w-full h-48 object-cover" alt="image" />
     <div className="p-2 flex-1 flex items-center justify-center">
-          
     <p  className="dark:text-white text-center line-clamp-2 overflow-hidden w-full">{activity?.heading[startIndex+ key]}</p>
 </div>
 </div> 

@@ -25,8 +25,8 @@ const signToken = (id) => {
     ),
     httpOnly: true,
     secure: true,
-  sameSite: 'strict',
-  domain:'http://localhost:5173',
+  //  sameSite: 'strict',
+  //  domain:'http://localhost:5173/',
   path:'/'
 
   }
@@ -89,6 +89,8 @@ const signToken = (id) => {
        token,
       });
     } catch ({ name, message }) {
+      console.log(message);
+
       res.status(401).json({
         status: name,
         message,

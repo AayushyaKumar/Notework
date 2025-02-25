@@ -7,29 +7,42 @@ interface Heading{
 import { useAuthContext } from '../../hooks/useAuth'
 import {  useState } from 'react'
 function Pdf({heading,index,onPdfGenerated}:Heading) {
-    console.log(index)
     const [isDisable,setIsDisable]=useState(false)
+    const {activity,setIsNew}=useAuthContext()
     const {logout}=useAuthContext()
+    console.log(activity?.heading[index])
     const handleSubmit= async()=>{
+
         setIsDisable(true)
         try{
         const response= await axios.post('http://localhost:4000/ai/makePdf',
-       { heading  } ,{
-         withCredentials: true,
-       }        
-
-         )
-
-         const activityJSON= sessionStorage.getItem('activity')
-         if(!activityJSON ) throw new Error
+       { heading } ,
+       { withCredentials: true,  } )
+        //  const activityJSON= sessionStorage.getItem('activity')
+        //  if(!activityJSON ) throw new Error
          
         
-         const Activity= JSON.parse(activityJSON)
+        //  const Activity= JSON.parse(activityJSON)
 
-         Activity.url[index]= response.data.data.url
-         const updatedActivityJSON = JSON.stringify(Activity);
-         sessionStorage.setItem('activity', updatedActivityJSON);
-    onPdfGenerated(index,true)
+        //  Activity.url[index]= response.data.data.url
+        //  const updatedActivityJSON = JSON.stringify(Activity);
+        //  sessionStorage.setItem('activity', updatedActivityJSON);
+   
+        if(response.status===401){
+            logout()
+            throw new Error('Unauthorized');
+        }
+        if(!response) return new Error('No response')
+        
+      
+        const info=response.data.url
+      
+            onPdfGenerated(index,info)
+      
+        
+       setIsNew(true) 
+        
+
         }catch(error){
             
             if (axios.isAxiosError(error)) {
@@ -40,23 +53,20 @@ function Pdf({heading,index,onPdfGenerated}:Heading) {
                 }
             } else {
                  console.error('Unexpected error:', error);
-             }
+            }
         }finally{
             setIsDisable(false)
 
         }
       }
-    
-
   return (
     <div>
-
-            { <button className="font-bold sm:ml-0 ml-4 sm:my-0  my-1 text-white flex gap-1 px-2 py-1.5 bg-gray-800 hover:bg-black dark:bg-colorGradient3 dark:text-white dark:hover:bg-hoverColor  rounded-lg  disabled:opacity-50 disabled:cursor-not-allowed" onClick={handleSubmit} disabled={isDisable}>
+            <button className="font-bold sm:ml-0 ml-4 sm:my-0  my-1 text-white flex gap-1 px-2 py-1.5 bg-gray-800 hover:bg-black dark:bg-colorGradient3 dark:text-white dark:hover:bg-hoverColor  rounded-lg  disabled:opacity-50 disabled:cursor-not-allowed" onClick={handleSubmit} disabled={isDisable}>
           
             Create
            <p>Pdf</p> 
           
-        </button>}
+        </button> 
     
 </div>  
   )

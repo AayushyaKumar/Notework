@@ -49,7 +49,7 @@ const handleChange = async (e: {
  <div className="dark:bg-colorGradient2">
     { !signupstatus ?
     <div className=" min-h-screen flex  justify-center items-center py-8">
-    <div className=" flex items-center justify-center p-10 flex-col border-2 border-gray-400 w-full max-w-md rounded-lg " >
+    <div className=" flex items-center justify-center p-10 flex-col border-2 border-gray-400 max-sm:border-none w-full max-w-md rounded-lg " >
     <h1 className="text-2xl mb-3 dark:text-gray-300"> Hello <b className="dark:text-white">Notework User </b></h1> 
     <div className="mb-4 p-2 flex-col justify-center text-gray-700">
     <span className="dark:text-gray-400 md:text-lg  ">Create your account and get access to </span>
