@@ -1,63 +1,100 @@
+import React, { useState, useEffect, useRef } from 'react';
 
-import { useEffect } from "react";
-import { motion, stagger, useAnimate } from "framer-motion";
-import { cn } from "../../lib/utils";
+interface TextGenerateProps {
+  text: string;
+  speed?: number;
+  delay?: number;
+  onComplete?: () => void;
+}
 
-export const TextGenerateEffect = ({
-  words,
-  className,
-  filter = true,
-  duration = 0.5,
-}: {
-  words: string;
-  className?: string;
-  filter?: boolean;
-  duration?: number;
+const TextGenerate: React.FC<TextGenerateProps> = ({
+  text,
+  speed = 30,
+  delay = 0,
+  onComplete,
 }) => {
-  const [scope, animate] = useAnimate();
-  const wordsArray = words.split(" ");
-  useEffect(() => {
-    animate(
-      "span",
-      {
-        opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
-      },
-      {
-        duration: duration ? duration : 1,
-        delay: stagger(0.2),
-      }
-    );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scope.current]);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const renderWords = () => {
-    return (
-      <motion.div ref={scope}>
-        {wordsArray.map((word, idx) => {
-          return (
-            <motion.span
-              key={word + idx}
-              className="dark:text-white text-black opacity-0"
-              style={{
-                filter: filter ? "blur(10px)" : "none",
-              }}
-            >
-              {word}{" "}
-            </motion.span>
-          );
-        })}
-      </motion.div>
+  useEffect(() => {
+    // Reset state when text changes
+    setDisplayedText('');
+    setIsComplete(false);
+    
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Initial delay before starting to type
+    timeoutRef.current = setTimeout(() => {
+      let currentIndex = 0;
+
+      const typeNextChar = () => {
+        if (currentIndex < text.length) {
+          setDisplayedText(text.substring(0, currentIndex + 1));
+          currentIndex++;
+          timeoutRef.current = setTimeout(typeNextChar, speed);
+        } else {
+          setIsComplete(true);
+          if (onComplete) onComplete();
+        }
+      };
+
+      typeNextChar();
+    }, delay);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [text, speed, delay, onComplete]);
+
+  // Function to parse markdown and convert to JSX
+  const parseMarkdown = (content: string) => {
+    // Split the content by markdown patterns
+    const parts = [];
+    let currentText = '';
+    let inBold = false;
+    
+    for (let i = 0; i < content.length; i++) {
+      // Check for bold pattern
+      if (i < content.length - 1 && content.substring(i, i + 2) === '**') {
+        // Add current text to parts
+        if (currentText) {
+          parts.push({ text: currentText, bold: inBold });
+          currentText = '';
+        }
+        
+        // Toggle bold state
+        inBold = !inBold;
+        i++; // Skip the second asterisk
+      } else {
+        currentText += content[i];
+      }
+    }
+    
+    // Add any remaining text
+    if (currentText) {
+      parts.push({ text: currentText, bold: inBold });
+    }
+    
+    // Convert parts to JSX
+    return parts.map((part, index) => 
+      part.bold ? 
+        <strong key={index}>{part.text}</strong> : 
+        <span key={index}>{part.text}</span>
     );
   };
 
   return (
-    <div className={cn("font-bold", className)}>
-      <div className="mt-4">
-        <div className=" dark:text-white text-black text-2xl leading-snug tracking-wide">
-          {renderWords()}
-        </div>
-      </div>
+    <div className="typewriter-effect">
+      {parseMarkdown(displayedText)}
+      {!isComplete && <span className="cursor">|</span>}
     </div>
   );
 };
+
+export default TextGenerate;

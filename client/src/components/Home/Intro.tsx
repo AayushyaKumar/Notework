@@ -22,9 +22,11 @@ function Intro() {
     },
   ];
   return (
-    <div className="lg:flex lg:flex-row gap-32 py-12 px-8 ">
-    <img src="https://res.cloudinary.com/dmuigsle3/image/upload/v1740502450/ggdmdahp3moynis14ccj.jpg" className="rounded-2xl lg:w-1/2 lg:h-1/3 w-11/12" alt="Intro Image" />
-   <center className=" lg:flex items-center py-4 mt-4"><TypewriterEffect words={words}  /> 
+    <div className="md:flex md:flex-row md:items-center  gap-32 py-12 px-8 ">
+      <div className="lg:w-3/5  md:w-1/2  w-full aspect-[4/3] relative">
+    <img src="https://res.cloudinary.com/dmuigsle3/image/upload/v1740502450/ggdmdahp3moynis14ccj.jpg" loading="lazy" className="rounded-2xl w-full h-full object-cover" alt="Intro Image" />
+    </div>
+   <center className=" lg:flex items-center py-4 mt-4  lg:w-2/5  "><TypewriterEffect words={words}  /> 
    </center>
    </div>
   )

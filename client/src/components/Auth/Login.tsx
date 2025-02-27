@@ -13,7 +13,7 @@ export default function Login() {
   });
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+  const { isAuthenticated, setIsAuthenticated,setUser } = useAuthContext();
   const handleChange = async (e: {
     target: { name: string; value: string | number };
   }) => {
@@ -24,6 +24,7 @@ export default function Login() {
     });
   };
   const {
+    
     loading,
     error,
     execute: login,
@@ -35,37 +36,14 @@ export default function Login() {
       const response = await login(formdata);
       setIsAuthenticated(true);
       setMessage(response.user);
-      console.log(isAuthenticated)
-  
+      setUser(response?.data);
+
         navigate("/");
-   
+
     } catch {
       console.error("Login failed");
     }
   };
-
-  // const handleLogin= async(e: React.FormEvent<HTMLFormElement>)=>{
-  //   e.preventDefault()
-  // try {
-  //   const response =  await fetch("http://localhost:4000/auth/login",{
-  //     method:'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(formdata),
-  //     credentials:'include'
-  //   })
-  //   const data = await response.json()
-  //   console.log(data,"login response")
-  //   if(data.status !== "success")   return new Error
-  //   setIsAuthenticated(true)
-  //     setMessage(data.user)
-
-  //   }catch(e){
-  //    console.log(e)
-  //    setMessage("Something went very wrong")
-  // }}
-
 
 
   return (

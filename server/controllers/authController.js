@@ -52,6 +52,14 @@ const signToken = (id) => {
       res.status(201).json({
         status: "ok",
         token,
+        data:{
+            //  id: user._id,
+            name:user.name,
+            email:user.email,
+            profile:user.profilePicture,
+            joinedDate: user.joinedDate
+          
+        }
       });
     } catch ({ name, message }) {
       res.status(404).json({
@@ -85,6 +93,14 @@ const signToken = (id) => {
      console.log(token)
       res.status(200).json({
         status: "success",
+        data:{
+          // id: decoded.id,
+          name:user.name,
+          email:user.email,
+          profile:user.profilePicture,
+          joinedDate: user.joinedDate
+        
+      },
          user: user.name,
        token,
       });
