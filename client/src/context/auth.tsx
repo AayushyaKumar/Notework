@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState, ReactNode, useCallback, SetS
 import { useNavigate } from 'react-router-dom';
 
 interface User {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   profile: string;
@@ -23,6 +23,7 @@ interface UserActivity {
 interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
   user: User | null;
   summaryInfo: Transcribe | null;
   setSummaryInfo: Dispatch<SetStateAction<Transcribe|null>>
@@ -68,7 +69,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
   const checkAuth = useCallback(async () => {
     
     try {
-      const response = await axios.get('http://localhost:4000/auth/verify', 
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/verify`, 
        { withCredentials:true,
       });
       if (!response || response.status !== 200) {
@@ -79,8 +80,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
       
         sessionStorage.setItem('user', JSON.stringify(response.data.data));
          
-       } catch (error) {
-      console.error('Auth check error:', error);
+       } catch  {
       setIsAuthenticated(false);
   setUser(null);
     }
@@ -94,7 +94,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
     }
   
     try{
-    const response = await fetch(`http://localhost:4000/ai/${user?.id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}ai/${user?.id}`, {
           credentials: 'include', 
         });
   
@@ -105,8 +105,8 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
         const data = await response.json();
         setActivity(data.data);
         sessionStorage.setItem('activity', JSON.stringify(data.data)); 
-    }catch(error){
-      console.error('Error is:',error)
+    }catch{
+      console.error('Something went wrong while fetching data');
    
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,7 +135,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
   }, [checkAuth, fetchActivity,isNew]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated,setIsAuthenticated, user ,logout,checkAuth,activity,summaryInfo,setSummaryInfo, fetchActivity,isNew,setIsNew}}>
+    <AuthContext.Provider value={{ isAuthenticated,setIsAuthenticated, user ,setUser,logout,checkAuth,activity,summaryInfo,setSummaryInfo, fetchActivity,isNew,setIsNew}}>
       {children}
     </AuthContext.Provider>
   );

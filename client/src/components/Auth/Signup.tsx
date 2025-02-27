@@ -15,7 +15,7 @@ const [formData,setFormData]= useState({
 })
 const [signupstatus, setSignupStatus] = useState<boolean| undefined>()
 const navigate = useNavigate()
-const {setIsAuthenticated}=useAuthContext()
+const {setIsAuthenticated,setUser}=useAuthContext()
 const handleChange = async (e: {
   target: { name: string; value: string | number };
 }) => {
@@ -27,6 +27,7 @@ const handleChange = async (e: {
 };
 
   const {
+   
     loading,
     error,
     execute: signup,
@@ -35,11 +36,13 @@ const handleChange = async (e: {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-       await signup(formData);
+      const response= await signup(formData);
       setIsAuthenticated(true);
       setSignupStatus(true)
+  
+     setUser(response?.data)
         navigate("/");
-   
+     
     } catch {
       console.error("Login failed");
     }
@@ -147,9 +150,10 @@ const handleChange = async (e: {
   
     </div>
 
-    <p className="flex p-4 mt-2 gap-2 dark:text-white">Already have an account? <NavLink to="/login"> <a className="text-blue-400">Login</a> </NavLink></p>
+    <p className="flex p-4 mt-2 gap-2 dark:text-white">Already have an account? <NavLink to="/login" className="text-blue-400" > Login </NavLink></p>
+    <ContinuewithGoogle /> 
       </form>
-     <ContinuewithGoogle/> 
+    
      </div>
      </div>
     

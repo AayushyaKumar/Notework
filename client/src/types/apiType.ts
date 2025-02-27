@@ -16,6 +16,13 @@ export interface ApiResponse<T> {
   
   export interface AuthResponse {
     token: string;
+    data:{
+      id: string;
+      name: string;
+      email: string;
+      profile: string;
+      joinedDate: string
+    }
     // user: {
     //   id: string;
     //   name: string;

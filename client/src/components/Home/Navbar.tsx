@@ -19,6 +19,7 @@ export default function Navbar() {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
+    console.log(user)
     if(location.pathname ==='/' || location.pathname==='/forgotPassword'){
       setRoute(true)
     }  else{
@@ -147,11 +148,11 @@ export default function Navbar() {
               onClick={()=>{setIsOpen(!isOpen)}}
               className="text-white focus:outline-none"
             >
-            {isAuthenticated ?   <img
+            {user ?   <img
               src={`${user?.profile}`}
               alt={user?.name}
               width={50}
-              className="w-8 h-8 rounded-full"
+              className="w-8 h-8 rounded-full" loading="lazy"
             />: <AlignJustify className="text-black dark:text-white"/> }
             </button>
           </div>

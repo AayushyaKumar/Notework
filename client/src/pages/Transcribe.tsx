@@ -3,7 +3,7 @@ import Createpdf from "../components/Transcribe/Createpdf";
 import Previous from "../components/Transcribe/Previous";
 import { useAuthContext } from "../hooks/useAuth";
 import { AuthProvider } from "../context/auth";
-import { TextGenerateEffect } from "../components/Transcribe/text-generate-effect"; 
+import  TextGenerate  from "../components/Transcribe/text-generate-effect"; 
 import { SkeletonWave, TypingAnimation,LoadingSkeleton} from "../components/Transcribe/SkeletonEffect";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "react-router-dom";
@@ -27,6 +27,8 @@ export default function Transcribe() {
   
       scrollToSection();
     }, [location]);
+
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
@@ -154,7 +156,7 @@ disabled={isDisable}
                   <div className="dark:text-white   border-2 border-gray-300 rounded-lg w-4/6 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap font-bold" 
       style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }} >
                   
-                  <TextGenerateEffect words={output} duration={2} 
+                  <TextGenerate text={output} speed={30} delay={2} 
                   />                  </div>
                 {isDisable? <br/>:  <Createpdf />}
                 </div>
