@@ -58,7 +58,7 @@ export function  TypingAnimation() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className={` relative  w-4/6 h-92  max-w-md lg:max-w-4xl mx-auto bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden h-96`}
+        className={` relative md:w-4/6  w-11/12  mt-4 sm:mt-6 md:mt-8 lg:mt-12 h-92  max-w-md lg:max-w-4xl mx-auto bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden h-96`}
       >
         <div className="relative w-full h-full">
           <motion.div

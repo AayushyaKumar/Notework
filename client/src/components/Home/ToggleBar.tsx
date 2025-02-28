@@ -8,8 +8,6 @@ interface Open{
     isClose:()=>void
 }
 
-
-
 export function ToggleBar({isOpen,isClose}: Open ){
   const { isAuthenticated, user } = useAuthContext();
   const navigate = useNavigate();

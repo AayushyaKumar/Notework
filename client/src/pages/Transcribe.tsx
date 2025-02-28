@@ -140,7 +140,7 @@ disabled={isDisable}
   <img
                   src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
                   alt="thumbnail image"
-                  className="rounded-lg  w-4/6 h-92 mx-auto "
+                  className="rounded-lg  sm:w-4/6 w-11/12 h-92 mx-auto mt-4 sm:mt-6 md:mt-8 lg:mt-12"
                 /> 
               }
 
@@ -150,13 +150,13 @@ disabled={isDisable}
  
      }
             {output && (
-              <div className=" flex-row mx-auto justify-center  text-gray-600  rounded-lg">
+              <div className=" flex-row mx-auto justify-center  text-gray-600   rounded-lg">
                 
                 <div className="flex flex-col justify-center items-center gap-4 ">
-                  <div className="dark:text-white   border-2 border-gray-300 rounded-lg w-4/6 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap font-bold" 
+                  <div className="dark:text-white border-2 border-gray-300   rounded-lg sm:w-4/6 w-11/12 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap font-bold" 
       style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }} >
                   
-                  <TextGenerate text={output} speed={30} delay={2} 
+                  <TextGenerate text={output} speed={40} delay={2} 
                   />                  </div>
                 {isDisable? <br/>:  <Createpdf />}
                 </div>

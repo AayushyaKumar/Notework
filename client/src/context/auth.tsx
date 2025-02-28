@@ -67,7 +67,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
     window.location.reload()
   }, [navigate]);
   const checkAuth = useCallback(async () => {
-    
+   
     try {
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}auth/verify`, 
        { withCredentials:true,
@@ -75,8 +75,9 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
       if (!response || response.status !== 200) {
         throw new Error("Authentication failed");
       }
+ 
         setIsAuthenticated(true);
-        setUser(response.data);
+        setUser(response.data.data);
       
         sessionStorage.setItem('user', JSON.stringify(response.data.data));
          
@@ -107,7 +108,6 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
         sessionStorage.setItem('activity', JSON.stringify(data.data)); 
     }catch{
       console.error('Something went wrong while fetching data');
-   
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[user?.id,logout])
@@ -130,6 +130,7 @@ const [activity, setActivity] = useState<UserActivity | null>(() => {
       fetchActivity()
       setIsNew(false)
     }
+    
     if(!isAuthenticated) checkAuth();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkAuth, fetchActivity,isNew]);
