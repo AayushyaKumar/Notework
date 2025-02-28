@@ -1,22 +1,15 @@
-// import PieChartComponent from "../components/Dashboard/BarChartComponent";
 import Resources from "../components/Dashboard/Resources"
-// import Analytics from "../components/Dashboard/Analytics";
 import { ThemeProvider } from "../context/Theme";
-import { useThemeButton } from "../hooks/useTheme";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {UserStats} from "../components/Dashboard/RecentActivity"
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import BarChartComponent from "../components/Dashboard/BarChartComponent";
 
 const Dashboard: React.FC = () => {
-  const {darkMode}=useThemeButton()
   const analysisRef = useRef<HTMLDivElement>(null);
   const chartsRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  console.log(darkMode,"Dashboard")
   useEffect(() => {
-    // Scroll to the appropriate section based on the URL hash
     const scrollToSection = () => {
       const hash = location.hash;
       if (hash === "#resources" && analysisRef.current) {

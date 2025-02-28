@@ -19,6 +19,7 @@ import Cards from './components/Home/Cards';
 import { ForgotPasswordForm } from './components/Auth/ForgotPassword';
 import {ProtectedResetRoute} from './components/Auth/ProtectedResetRoute';
 import InvalidTokenPage from './components/Auth/InvalidTokenPage';
+import ScrollToTop from './components/scrolltoTop';
 // import Section from './components/Sections';
 
 export default function App(){
@@ -26,6 +27,7 @@ export default function App(){
 return(
 <ThemeProvider>
   <Router> 
+  <ScrollToTop />
   <Routes> 
    <Route errorElement={<Errorpage/>}>
    <Route path="/" element={<Root/>}  >

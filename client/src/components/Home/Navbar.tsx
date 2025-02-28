@@ -19,7 +19,7 @@ export default function Navbar() {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
-    console.log(user)
+    
     if(location.pathname ==='/' || location.pathname==='/forgotPassword'){
       setRoute(true)
     }  else{
@@ -46,18 +46,12 @@ export default function Navbar() {
             
             <ul className="hidden md:flex flex-row justify-center md:gap-16 ml-12">
                <li className="dark:text-white  rounded-xl px-2 py-2 sm:mr-1 font-bold">
-               {/* <button className="dark:text-white text-lg font-bold"> */}
-
               <NavLink to="pdf" className={({isActive})=>` ${isActive? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor': 'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
-               
-         
                     Transcribe
-                  
-               
               </NavLink>
-{/* </button> */}
+
               </li> 
-                             <li className="dark:text-white rounded-xl px-2 py-2 sm:mr-1 font-bold ">
+              <li className="dark:text-white rounded-xl px-2 py-2 sm:mr-1 font-bold ">
 
               <NavLink to="dash#resources" className={({isActive})=>` ${(isActive && (location.hash==='#resources'))? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor':  'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
                   {" "}
