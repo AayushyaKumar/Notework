@@ -14,13 +14,19 @@ const signToken = (id) => {
       expiresIn: process.env.JWT_EXPIRES,
     });
   };
+
   const cookie = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES*60*60*24*1000
     ),
-    httpOnly: true
+ 
+   httpOnly: true,
+    secure: true,
+    sameSite: 'lax', 
+    path: '/'
 
   }
+
 
 exports.authGoogle=async(req, res) => {
     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${qs.stringify({
@@ -80,8 +86,7 @@ exports.authGoogle=async(req, res) => {
         console.log(token)
         res.cookie('JWT',token,cookie)
         // res.cookie('name',name,cookie)
-        
-       
+ 
       }
       res.redirect(`${FRONTEND_URL}`)
 
