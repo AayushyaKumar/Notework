@@ -9,10 +9,6 @@ function Home() {
     
       <div className="">
         <Navbar />
-
-
-   
-
     </div>
     </ThemeProvider>
   )

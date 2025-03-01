@@ -23,11 +23,11 @@ const signToken = (id) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES*60*60*24*1000
     ),
-    httpOnly: true,
+ 
+   httpOnly: true,
     secure: true,
-  //  sameSite: 'strict',
-  //  domain:'http://localhost:5173/',
-  path:'/'
+    sameSite: 'lax', 
+    path: '/'
 
   }
  
