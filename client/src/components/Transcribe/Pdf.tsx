@@ -18,15 +18,7 @@ function Pdf({heading,index,onPdfGenerated}:Heading) {
         const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}ai/makePdf`,
        { heading } ,
        { withCredentials: true,  } )
-        //  const activityJSON= sessionStorage.getItem('activity')
-        //  if(!activityJSON ) throw new Error
-         
-        
-        //  const Activity= JSON.parse(activityJSON)
-
-        //  Activity.url[index]= response.data.data.url
-        //  const updatedActivityJSON = JSON.stringify(Activity);
-        //  sessionStorage.setItem('activity', updatedActivityJSON);
+       
    
         if(response.status===401){
             logout()

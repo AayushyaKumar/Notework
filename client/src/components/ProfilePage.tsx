@@ -98,10 +98,6 @@ const handleLogout = async () => {
         </div>
       </div>
 
-      {/* Recent Activity */}
-    
-
-      {/* Action Buttons */}
     { localStorage.getItem('disable')==='false'?   <button className="flex items-center px-4 py-2 text-white bg-blue-500 font-bold rounded hover:bg-blu7-600" onClick={handleEdit}>
         Save Changes
         </button> : <div className="flex flex-col justify-between  w-1/2 mt-6 space-x-4 py-6">

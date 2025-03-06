@@ -36,20 +36,24 @@ export function ToggleBar({isOpen,isClose}: Open ){
             {(isOpen && isAuthenticated)? (
               <>
                   <NavLink to="/profile">
+                  
                     <li className="flex flex-row items-center gap-6  p-2 ">
-            <img
+       <button onClick={isClose} className="dark:text-white text-xl ">     <img
               src={`${user?.profile}`}
               alt={user?.name}
               width={50}
               className="w-8 h-8 rounded-full"
-            /><p className="dark:text-white text-xl ">{user?.name}</p>
+            /> {user?.name} </button>
             </li>
           </NavLink>
  <li className=" font-bold dark:text-white text-xl">
 
  <NavLink to="pdf#prompt" className={({isActive})=>` ${(isActive && (location.hash==='#prompt'))? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor': 'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
                    {" "}
-                     Transcribe
+                   <button onClick={isClose}>
+                    Transcribe
+                   </button>
+                     
                   
                
                </NavLink> 
@@ -57,7 +61,9 @@ export function ToggleBar({isOpen,isClose}: Open ){
                
                  <li className=" font-bold dark:text-white text-xl">
                    {" "}<NavLink to="dash#resources" className={({isActive})=>` ${(isActive && (location.hash==='#resources'))? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor':  'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
+                   <button onClick={isClose}>
                      Dashboard
+                     </button>
                    </NavLink>
                  </li>
                
@@ -65,7 +71,10 @@ export function ToggleBar({isOpen,isClose}: Open ){
                  <li className="font-bold dark:text-white text-xl  ">
                   <button onClick={handleNavigateToCharts}>
                   <NavLink to="dash#charts" className={({isActive})=>`${(isActive && location.hash==='#charts')? 'bg-black p-2 rounded-lg text-white dark:bg-hoverColor ': 'hover:bg-black hover:rounded-lg hover:text-white p-2 dark:hover:bg-hoverColor' }`}>
-                  Reports
+                  <button onClick={isClose}>
+                    Reports
+                  </button>
+                  
                    </NavLink>
                    </button>
                  </li>
@@ -75,10 +84,13 @@ export function ToggleBar({isOpen,isClose}: Open ){
           <>
           <li className="font-bold text-xl">
                   {" "}
-                  <NavLink to="/login" >Login</NavLink>
+                  <NavLink to="/login" >
+                  <button onClick={isClose}>Login</button>
+                  </NavLink>
                 </li>
                 <li className="bg-colorGradient2 p-1.5 rounded-lg font-bold text-white text-xl">
-                  <NavLink to="/signup" >Sign Up</NavLink>
+                
+                  <NavLink to="/signup" onClick={isClose}>  <button>Sign Up</button></NavLink>
                 </li></> 
                 }
 
