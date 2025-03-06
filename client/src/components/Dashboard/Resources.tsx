@@ -5,13 +5,13 @@ import { useAuthContext } from "../../hooks/useAuth";
 import { Download,File ,FileText} from 'lucide-react';
 import Pdf from "../Transcribe/Pdf";
 import { NavLink } from "react-router-dom";
-import { useFileDownload } from "../../hooks/useDownload";
+// import { useFileDownload } from "../../hooks/useDownload";
 export default function Resources() {
 
   const {activity} = useAuthContext()
   const [visibleItems, setVisibleItems] = useState<number>(5); 
   const [update,setUpdate]=useState<(boolean)[]>([])
-  const downloadFile = useFileDownload();
+  // const downloadFile = useFileDownload();
 
   const handleSeeMore = () => {
     
@@ -59,8 +59,8 @@ export default function Resources() {
               {value ? value: <h1 > List is empty.</h1>} 
             </li>
             </div>
-            <button key={activity?.url[index] } onClick={()=> downloadFile(activity?.url[index] )}>{ activity?.url[index]===null && !update[index]   ? <Pdf heading={activity?.heading[index]}  index={index} onPdfGenerated={handleUpdate}/>:<Download className="w-5 h-6 text-gray-800 dark:text-gray-400 sm:mx-0 mx-4 sm:my-0 my-1" />}</button>
-                 {/* <a className="pr-2" target="_blank" href={activity?.url[index]  }> { activity?.url[index]===null && !update[index]   ? <Pdf heading={activity?.heading[index]}  index={index} onPdfGenerated={handleUpdate}/>:<Download className="w-5 h-6 text-gray-800 dark:text-gray-400 sm:mx-0 mx-4 sm:my-0 my-1" />}</a> */}
+            {/* <button key={activity?.url[index] } onClick={()=> downloadFile(activity?.url[index] )}>{ activity?.url[index]===null && !update[index]   ? <Pdf heading={activity?.heading[index]}  index={index} onPdfGenerated={handleUpdate}/>:<Download className="w-5 h-6 text-gray-800 dark:text-gray-400 sm:mx-0 mx-4 sm:my-0 my-1" />}</button> */}
+                 <a className="pr-2" target="_blank" href={activity?.url[index]  } download={activity?.heading[index]}> { activity?.url[index]===null && !update[index]   ? <Pdf heading={activity?.heading[index]}  index={index} onPdfGenerated={handleUpdate}/>:<Download className="w-5 h-6 text-gray-800 dark:text-gray-400 sm:mx-0 mx-4 sm:my-0 my-1" />}</a>
             </ul>
         ))
         }
