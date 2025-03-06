@@ -38,7 +38,7 @@ export function ToggleBar({isOpen,isClose}: Open ){
                   <NavLink to="/profile">
                   
                     <li className="flex flex-row items-center gap-6  p-2 ">
-       <button onClick={isClose} className="dark:text-white text-xl ">     <img
+       <button onClick={isClose} className="dark:text-white text-xl flex gap-2 items-center">     <img
               src={`${user?.profile}`}
               alt={user?.name}
               width={50}

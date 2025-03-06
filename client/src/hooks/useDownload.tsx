@@ -1,7 +1,7 @@
 // hooks/useFileDownload.js
 export const useFileDownload = () => {
-    const downloadFile = (url: string| undefined) => {
-     
+    const downloadFile = async (url: string| undefined) => {
+      if(!url) return
       const getFileName = (url: string) => {
         const urlParts = url.split('/');
         const fileNameFromUrl = urlParts[urlParts.length - 1];
@@ -11,7 +11,7 @@ export const useFileDownload = () => {
       };
       const link = document.createElement('a');
 
-      if(!url) return
+     
 
       link.href = url;
       link.setAttribute('download', getFileName(url));
@@ -20,9 +20,8 @@ export const useFileDownload = () => {
       document.body.appendChild(link);
       link.click();
       
-      setTimeout(() => {
-        document.body.removeChild(link);
-      }, 100);
+      document.body.removeChild(link);
+
     };
   
     return downloadFile;
