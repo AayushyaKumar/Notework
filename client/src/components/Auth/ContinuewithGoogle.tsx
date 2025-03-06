@@ -39,7 +39,6 @@ export default function ContinuewithGoogle() {
           />
         </svg>{" "}
       </button>
-      {/* {output && <img src={output} alt="profilePicture" className="rounded-full"/>} */}
     </div>
     );
 
