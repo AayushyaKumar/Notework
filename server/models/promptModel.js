@@ -17,7 +17,8 @@ const promptSchema = new Schema({
     },
     summaryUrl:{
        type:String,
-    //    required:true,
+       set: (url) => url.startsWith("http://") ? url.replace("http://", "https://") : url
+
        
     },
     genre:{

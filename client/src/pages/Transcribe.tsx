@@ -55,8 +55,8 @@ export default function Transcribe() {
         credentials: "include",
         body: JSON.stringify({ input }),
       });
-      const data = await response.json();
-      console.log(data);
+      const parsedResponse = await response.json();
+      
       if(response.status===401){
 
   logout()
@@ -66,8 +66,8 @@ export default function Transcribe() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
         
-        setOutput(data.data.summary);
-        sessionStorage.setItem("id", data.data.id);
+        setOutput(parsedResponse.data.summary);
+        sessionStorage.setItem("id", parsedResponse.data.id);
         localStorage.setItem("newactivity", `${!isDisable}`);
         setIsDisable(false);
         setIsNew(true)
@@ -150,7 +150,7 @@ disabled={isDisable}
  
      }
             {output && (
-              <div className=" flex-row mx-auto justify-center  text-gray-600   rounded-lg">
+              <div className=" flex-row mx-auto justify-center     rounded-lg">
                 
                 <div className="flex flex-col justify-center items-center gap-4 ">
                   <div className="dark:text-white border-2 border-gray-300   rounded-lg sm:w-4/6 w-11/12 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap font-bold" 

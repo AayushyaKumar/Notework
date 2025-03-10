@@ -2,7 +2,7 @@ import axios from 'axios'
 interface Heading{
     heading: string,
     index: number,
-    onPdfGenerated:(state:number,value:boolean)=>void
+    onPdfGenerated:(state:number,value:boolean,data:string)=>void
 }
 import { useAuthContext } from '../../hooks/useAuth'
 import {  useState } from 'react'
@@ -28,12 +28,13 @@ function Pdf({heading,index,onPdfGenerated}:Heading) {
         
       
         const info=response.data.url
-      
-            onPdfGenerated(index,info)
+        if(activity) activity.url=info
+            
+            onPdfGenerated(index,true,info)
       
         
        setIsNew(true) 
-        
+       
 
         }catch(error){
             
