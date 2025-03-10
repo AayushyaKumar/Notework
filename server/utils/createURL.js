@@ -15,7 +15,6 @@ const createUrl= async()=>{
        .upload(
            pdfPath, {
                resource_type:"image",
-               timeout:1200000
            },
         
        )

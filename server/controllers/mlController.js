@@ -70,11 +70,11 @@ exports.CreatePdf = async(req,res,next)=>{
   const link = await createUrl()
   const {id }= req.params
   console.log(`${userId}`)
-   await notePrompt.findByIdAndUpdate(id,{summaryUrl:link.url},{ new: true })
+   await notePrompt.findByIdAndUpdate(id,{summaryUrl:link.secure_url},{ new: true })
    
    res.status(200).json({
     status:"success",
-    data: link.url
+    data: link.secure_url
   })
 }catch({name,message}){
    res.status(404).json({
@@ -159,12 +159,12 @@ exports.Pdf= async(req,res,next)=>{
     for (const value of notePdf){
     
        link = await createUrl()
-      value.summaryUrl = link.url 
+      value.summaryUrl = link.secure_url 
       await value.save()
     }
    res.status(200).json({
     status:"success",
-    url:link.url
+    url:link.secure_url
    })
 
   }catch({name,message}){

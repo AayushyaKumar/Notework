@@ -135,7 +135,7 @@ const TextGenerate: React.FC<TextGenerateProps> = ({
   return (
     <div 
       ref={containerRef}
-      className="typewriter-effect sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl"
+      className="typewriter-effect sm:text-lg md:text-xl lg:text-2xl  2xl:text-4xl"
       style={{ 
         position: 'relative',
         whiteSpace: 'pre-wrap',
