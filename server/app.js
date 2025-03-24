@@ -8,10 +8,11 @@ const authrouter = require("./routes/userRoutes")
 const mlrouter = require("./routes/mlroutes")
 
 require('dotenv').config()
+const baseUrl= process.env.FRONTEND_URL
 app.use(express.json())
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: baseUrl,
   credentials: true,
 }))
 
@@ -37,7 +38,7 @@ app.use(limiter)
 app.use("/ai",mlrouter)
 app.use("/auth",authrouter)
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 
 module.exports =  {app}

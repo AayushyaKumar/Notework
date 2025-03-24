@@ -16,20 +16,23 @@ const profileImageUrl=[
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES,
+      expiresIn: '1m',
     });
   };
-  const cookie = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES*60*60*24*1000
-    ),
+  const cookie=() => {
+   return    { 
+    maxAge: 60*1000,
+    // new Date(
+    //   Date.now() + process.env.JWT_COOKIE_EXPIRES*60*60*24*1000
+    // ),
  
    httpOnly: true,
     secure: true,
-    sameSite: 'lax', 
+    sameSite: 'Lax', 
     path: '/'
 
   }
+}
  
   exports.signup = async (req, res, next) => {
     try {
@@ -47,17 +50,17 @@ const signToken = (id) => {
         joinedDate
       });
       const token = signToken(newUser._id);
-      res.cookie('JWT',token,cookie)
+      res.cookie('JWT',token,cookie())
       console.log(token);
       res.status(201).json({
         status: "ok",
         token,
         data:{
             //  id: user._id,
-            name:user.name,
-            email:user.email,
-            profile:user.profilePicture,
-            joinedDate: user.joinedDate
+            name:newUser.name,
+            email:newUser.email,
+            profile:newUser.profilePicture,
+            joinedDate: newUser.joinedDate
           
         }
       });
@@ -79,15 +82,22 @@ const signToken = (id) => {
         return "Something went wrong";
       }
   
+
       const user = await noteUser.findOne({ email }).select("+password");
   
       const correct = await user.correctPassword(password, user.password);
       if (!correct) {
         return next(new Error("Incorrect Password"));
       }
+      const signToken = (id) => {
+        return jwt.sign({ id }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES,
+        });
+      };
+      
     
       const token = signToken(user._id);
-      res.cookie('JWT',token,cookie)
+      res.cookie('JWT',token,cookie())
       console.log(cookie)
      user.password=undefined
      console.log(token)
@@ -124,7 +134,7 @@ exports.auth= async(req,res,next)=>{
   if (!JWT) {
     return res.status(401).json({ message: 'No jwt provided' });
   }
-  const decoded =await  jwt.verify(JWT, process.env.JWT_SECRET);
+  const decoded =  jwt.verify(JWT, process.env.JWT_SECRET);
     
     const user = await noteUser.findById(decoded.id)
     if (!user) {
@@ -150,7 +160,7 @@ exports.auth= async(req,res,next)=>{
 
 
 exports.logout= async(req,res)=>{
- 
+
   if (!req.cookies.JWT) {
   
     return res.status(401).json({ message: 'No jwt provided' });

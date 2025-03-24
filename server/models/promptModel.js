@@ -5,6 +5,11 @@ const {Schema} = mongoose
 const promptSchema = new Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'noteUser', required: true },
     heading:{type:String,required:true},
+    requestId: { 
+        type: String, 
+        required: true, 
+        unique: true  
+    },
     prompt:{
 
         type:String,
