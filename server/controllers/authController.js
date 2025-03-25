@@ -2,6 +2,7 @@ const noteUser = require("./../models/userModel")
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
 const {joinedDate}= require('../utils/joinDate')
+const {signToken,cookie}= require('../utils/authToken')
 
 const profileImageUrl=[
   'https://res.cloudinary.com/dmuigsle3/image/upload/v1732558377/e9xqwr7g9mzusjtzcv14.webp',
@@ -14,25 +15,7 @@ const profileImageUrl=[
 
 
 
-const signToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-      expiresIn: '1m',
-    });
-  };
-  const cookie=() => {
-   return    { 
-    maxAge: 60*1000,
-    // new Date(
-    //   Date.now() + process.env.JWT_COOKIE_EXPIRES*60*60*24*1000
-    // ),
- 
-   httpOnly: true,
-    secure: true,
-    sameSite: 'Lax', 
-    path: '/'
 
-  }
-}
  
   exports.signup = async (req, res, next) => {
     try {
@@ -50,7 +33,7 @@ const signToken = (id) => {
         joinedDate
       });
       const token = signToken(newUser._id);
-      res.cookie('JWT',token,cookie())
+      res.cookie('JWT',token,cookie)
       console.log(token);
       res.status(201).json({
         status: "ok",
@@ -97,7 +80,7 @@ const signToken = (id) => {
       
     
       const token = signToken(user._id);
-      res.cookie('JWT',token,cookie())
+      res.cookie('JWT',token,cookie)
       console.log(cookie)
      user.password=undefined
      console.log(token)

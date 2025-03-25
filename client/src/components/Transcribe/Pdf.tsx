@@ -20,7 +20,7 @@ function Pdf({heading,index,onPdfGenerated}:Heading) {
        { withCredentials: true,  } )
        
    
-        if(response.status===401){
+        if(response.data.status===401){
             logout()
             throw new Error('Unauthorized');
         }

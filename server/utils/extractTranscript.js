@@ -13,9 +13,7 @@ async function extract_transcript(videoId){
      }
    return new Promise((resolve) => {
       setTimeout(() => resolve(transcript,1000));
-   
-      //  resolve(transcript)
-      //  console.log(transcript)
+
     });
   
  }

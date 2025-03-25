@@ -6,9 +6,9 @@ function parseFormattedText(rawText) {
   
   lines.forEach((line,index) => {
 
-    // Check for bold text (enclosed in ** or ***)
+ 
     const boldMatches = line.match(/\*\*\*(.*?)\*\*\*|\*\*(.*?)\*\*/g);
-    // const bulletHeading= line.match(/^\* \*\*(.*?)\*\*/g) ;
+    
     const bullet= line.match(/\* \*\*.*?\*\*/g)
     if (bullet) {
 

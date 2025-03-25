@@ -12,7 +12,6 @@ const { extract_transcript } = require("../utils/extractTranscript");
 const { error } = require("console");
 const { getVideoDetails } = require("../utils/getVideoDetails");
 
-const filePath = path.join(__dirname, "./../disk/A.pdf");
 const regex = /\.be\/([^?]+)/;
 exports.Summary = async (req, res, next) => {
   try {
@@ -102,7 +101,6 @@ exports.CreatePdf = async (req, res, next) => {
       errorType: name,
       message,
     });
-    console.log(message);
   }
 };
 
@@ -156,27 +154,40 @@ exports.removeDoc = async (req, res, next) => {
 
 exports.Pdf = async (req, res, next) => {
   const { heading } = req.body;
-  console.log(heading);
+  
   try {
     const notePdf = await notePrompt.find({ heading, summaryUrl: null });
-    console.log(notePdf);
-    if (!notePdf || notePdf.length === 0)
-      throw new Error("Something went wrong", error);
+    
+    if (!notePdf || notePdf.length === 0) throw new Error("Something went wrong", error);
+    const filename = `test-${notePdf.requestId}.pdf`;
+    const fontOptions = {
+      default: {
+        fontSize: 12,
+        font: "Helvetica",
+      },
+      modern: {
+        fontSize: 11,
+        font: "Helvetica",
+      },
+      formal: {
+        fontSize: 12,
+        font: "Times-Roman",
+      },
+    }['default'] || { fontSize: 12, font: "Helvetica" };
 
-    const pdf = new FPDF("P", "mm", "A4");
-    pdf.AddPage();
-    pdf.SetFont("Arial", "B", 12);
-    pdf.MultiCell(0, 10, notePdf[0].summary);
-    pdf.Output("F", filePath);
-    let link = "";
-    for (const value of notePdf) {
-      link = await createUrl();
-      value.summaryUrl = link.secure_url;
-      await value.save();
-    }
+    const filepath = await generatePDF(
+      notePdf.summary,
+      filename,
+      fontOptions
+    );
+    const { publicUrl } = await uploadToSupabase(filepath, filename);
+    if (!publicUrl) throw new Error("Could not upload file");
+    notePdf.summaryUrl = publicUrl;
+    await notePdf.save();
+    
     res.status(200).json({
       status: "success",
-      url: link.secure_url,
+      url: publicUrl,
     });
   } catch ({ name, message }) {
     res.status(404).json({

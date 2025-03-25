@@ -5,7 +5,7 @@ import axios from "axios";
 function Createpdf() {
   const [url, setUrl] = useState<string | undefined>();
   const [isDisable, setIsDisable] = useState(false);
-  const { setIsNew} = useAuthContext();
+  const { setIsNew,logout} = useAuthContext();
   const downloadFile = useFileDownload()
   const id = sessionStorage.getItem("id");
   const pdf = async () => {
@@ -18,7 +18,10 @@ function Createpdf() {
       );
       
       if (!data)       throw new Error();
-
+      if(data.status===401){
+        logout()
+        throw new Error('Unauthorized');
+      }
   
 
       setUrl(data.data);

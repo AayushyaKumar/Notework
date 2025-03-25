@@ -5,7 +5,7 @@ interface UseApiResponse<T> {
   data: T | null;
   loading: boolean;
   error: Error | null;
-  execute: (...args: any[]) => Promise<T>;
+  execute: (...args: unknown[]) => Promise<T>;
 }
 
 type ApiMethod = 'get' | 'post' | 'put' | 'delete';
@@ -20,7 +20,7 @@ export function useApi<T>(
   const [error, setError] = useState<Error | null>(null);
 
   const execute = useCallback(
-    async (...args: any[]) => {
+    async (...args: unknown[]) => {
       try {
         setLoading(true);
         setError(null);
@@ -42,6 +42,7 @@ export function useApi<T>(
     if (immediate) {
       execute();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
   return { data, loading, error, execute };
