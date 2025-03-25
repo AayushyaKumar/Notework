@@ -6,7 +6,7 @@ exports.protectedRoute = async (req, res, next) => {
        const token = req.cookies.JWT
      
       if (!token) {
-        return next("You are not logged in! Please log in to get access.", 401);
+        return res.status(401).json({ message: 'No jwt provided' });
       }
       
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);

@@ -1,39 +1,35 @@
-const {v2} = require("cloudinary")
-const path = require("path")
-require("dotenv").require
-const createUrl= async()=>{
-    try{
-  
-    v2.config({ 
-        cloud_name: 'dmuigsle3', 
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret:  process.env.CLOUDINARY_API_SECRET 
-    });
-    const pdfPath = path.join(__dirname, './../disk', 'A.pdf');
-    // Upload an image
-     const uploadResult = await v2.uploader
-       .upload(
-           pdfPath, {
-               resource_type:"image",
-           },
-        
-       )
-       .catch((error) => {
-           console.log(error,".catch error");
-       });
-    
-    console.log(uploadResult);
-    
-    // Optimize delivery by resizing and applying auto-format and auto-quality
-  
-    return new Promise((resolve) => {
-        resolve(uploadResult)
-      });  
+import "dotenv/config";
+import fs from "fs";
+// const path = require("path") ;
 
-}catch(err){
-        res.send(err)
-      }  // Transform the image: auto-crop to square aspect_ratio
-   
+import { createClient } from "@supabase/supabase-js" ;
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ;
+const supabaseKey =  process.env.NEXT_PRIVATE_SUPABASE_KEY ;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+async function uploadToSupabase(filepath,filename) {
+  try {
+
+    const fileContent = fs.readFileSync(filepath);
+    const { data, error } = await supabase.storage
+      .from("pdf") // Bucket name
+      .upload(filename, fileContent, {
+        contentType: "application/pdf",
+      });
+    if (error) {
+      throw new Error(`Upload failed: ${error.message}`);
+    }
+    
+    const { data:url } = supabase.storage.from("pdf").getPublicUrl(filename);
+    fs.unlinkSync(filepath)
+    return new Promise((resolve) => {
+      resolve(url);
+    });
+  } catch (error) {
+    console.log(error);
+    
+  }
 }
 
-module.exports =  {createUrl}
+export { uploadToSupabase };

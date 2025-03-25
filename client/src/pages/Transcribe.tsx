@@ -153,7 +153,7 @@ disabled={isDisable}
               <div className=" flex-row mx-auto justify-center     rounded-lg">
                 
                 <div className="flex flex-col justify-center items-center gap-4 ">
-                  <div className="dark:text-white border-2 border-gray-300   rounded-lg sm:w-4/6 w-11/12 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap font-bold" 
+                  <div className="dark:text-white border-2 border-gray-300   rounded-lg sm:w-4/6 w-11/12 p-2 md:pr-4 md:pl-4 whitespace-pre-wrap " 
       style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }} >
                   
                   <TextGenerate text={output} speed={40} delay={2} 

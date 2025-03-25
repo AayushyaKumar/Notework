@@ -3,12 +3,14 @@ const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer');
 require('dotenv').config()
 
-async function verify(token){
+const verify= async(token)=>{
   try{
+    console.log(token)
 const user = await noteUser.findOne({
   resetToken: token,
  resetTokenExpiry: { $gt: Date.now() }, // Ensure token is not expired
 });
+console.log(user)
 
 if (!user) return false
 return true
@@ -64,8 +66,9 @@ exports.verifyToken=async(req,res,next)=>{
   const { token } = req.params;
   try{
 const isUserExist= await verify(token)
+console.log(isUserExist)
  if (!isUserExist) return res.status(400).json({ message: 'Invalid or expired token' });
- res.status(200).json({ valid:isUserExist });
+ res.status(200).json({ valid:true });
 } catch (error) {
   res.status(500).json({ message: 'Server error', error: error.message });
   console.log(error)
