@@ -12,7 +12,7 @@ export const cookie=() => {
     maxAge: process.env.JWT_COOKIE_EXPIRES,
     httpOnly: true,
     secure: true,
-    sameSite: 'Lax', 
+    sameSite: None, 
     path: '/'
 
   }
