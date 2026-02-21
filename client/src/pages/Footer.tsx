@@ -7,7 +7,7 @@ function Footer() {
         
       <div className="bg-black dark:bg-colorGradient1   pt-6 pb-2 ">
         <span className="text-white px-6">
-            NoteWork 2024 &copy; . All rights reserved
+            Notework 2026 &copy; . All rights reserved
         </span>
                
    
