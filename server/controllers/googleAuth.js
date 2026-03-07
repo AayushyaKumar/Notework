@@ -64,7 +64,7 @@ exports.authGoogle=async(req, res) => {
         const token = signToken(newUser._id);
         // res.cookie('JWT',token,cookie)
         // res.cookie('name',name,cookie)
-        res.cookie('JWT',token,cookie)
+        res.cookie('JWT',token,cookie())
       }else{
         const token= signToken(isUserExist._id)
         console.log(token)
