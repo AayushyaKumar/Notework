@@ -33,7 +33,7 @@ const profileImageUrl=[
         joinedDate
       });
       const token = signToken(newUser._id);
-      res.cookie('JWT',token,cookie)
+      res.cookie('JWT',token,cookie())
       console.log(token);
       res.status(201).json({
         status: "ok",
@@ -80,7 +80,7 @@ const profileImageUrl=[
       
     
       const token = signToken(user._id);
-      res.cookie('JWT',token,cookie)
+      res.cookie('JWT',token,cookie())
       console.log(cookie)
      user.password=undefined
      console.log(token)
@@ -152,7 +152,7 @@ exports.logout= async(req,res)=>{
   res.cookie('JWT','', {
     httpOnly: true,
     secure: true, 
-    sameSite: 'strict',
+    sameSite: 'none',
     expires:new Date(0) 
   });
   res.status(200).send('Logged out');
